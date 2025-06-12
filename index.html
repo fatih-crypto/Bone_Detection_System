@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scapula Analiz Sistemi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .camera-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .camera-container {
+            position: relative;
+            background: #f8f9fa;
+            border: 3px dashed #ddd;
+            border-radius: 15px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .camera-placeholder {
+            color: #666;
+            font-size: 1.2em;
+            text-align: center;
+        }
+
+        .video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .camera-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #28a745, #1e7e34);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .results-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .analysis-result {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .analysis-result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .analysis-result h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .animal-type {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .chat-section {
+            grid-column: 1 / -1;
+            margin-top: 20px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+            display: none;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+
+        .chat-section.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chat-header {
+            background: linear-gradient(45deg, #17a2b8, #138496);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .chat-header::before {
+            content: "💬";
+            font-size: 2em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(102, 126, 234, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2em;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .chat-container {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 0 0 15px 15px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: white;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 18px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background: #007bff;
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background: #e9ecef;
+            color: #333;
+            align-self: flex-start;
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 0 0 15px 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid #dee2e6;
+            border-radius: 25px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: #007bff;
+        }
+
+        .btn-chat {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-chat:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .analysis-result h2 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 Scapula Analiz Sistemi</h1>
+            <p>Veteriner Kemik Analizi ve Bilgi Platformu</p>
+        </div>
+
+        <div class="main-content">
+            <div class="camera-section">
+                <h3>📸 Kamera Analiz</h3>
+                <div class="camera-container" id="cameraContainer">
+                    <div class="camera-placeholder" id="cameraPlaceholder">
+                        <div>📷</div>
+                        <div>Kamerayı başlatın</div>
+                    </div>
+                    <video id="video" class="video" style="display: none;" autoplay playsinline></video>
+                </div>
+                <div class="camera-controls">
+                    <button class="btn btn-primary" id="startCamera">Kamerayı Başlat</button>
+                    <button class="btn btn-success" id="analyzeBtn">Analiz Et</button>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <h3>📊 Analiz Sonuçları</h3>
+                <div class="analysis-result" id="analysisResult">
+                    <div class="loading-overlay" id="loadingOverlay">
+                        <div class="spinner"></div>
+                        <div>Analiz ediliyor...</div>
+                    </div>
+                    <h2>SCAPULA</h2>
+                    <div class="animal-type">
+                        <strong>Hayvanın Türü: İNEK</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-section">
+            <div class="chat-header">
+                <h3>💬 Bilgi Sohbet Merkezi</h3>
+                <p>Scapula hakkında soru sorun, bilgi alın</p>
+            </div>
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">
+                        Merhaba! Scapula hakkında bilgi almak için istediğinizi sorabilirsiniz.
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Mesajınızı yazın...">
+                    <button class="btn-chat" id="sendBtn">Gönder</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let stream = null;
+        const video = document.getElementById('video');
+        const cameraPlaceholder = document.getElementById('cameraPlaceholder');
+        const startCameraBtn = document.getElementById('startCamera');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const analysisResult = document.getElementById('analysisResult');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        // Kamera başlatma
+        startCameraBtn.addEventListener('click', async () => {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: 'environment' },
+                    audio: false 
+                });
+                video.srcObject = stream;
+                video.style.display = 'block';
+                cameraPlaceholder.style.display = 'none';
+                startCameraBtn.textContent = 'Kamera Açık';
+                startCameraBtn.disabled = true;
+            } catch (err) {
+                console.error('Kamera erişim hatası:', err);
+                alert('Kamera erişimi sağlanamadı. Lütfen kamera izinlerini kontrol edin.');
+            }
+        });
+
+        // Analiz butonu
+        analyzeBtn.addEventListener('click', () => {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const chatSection = document.querySelector('.chat-section');
+            
+            // Loading başlat
+            analysisResult.classList.add('show');
+            loadingOverlay.classList.add('show');
+            
+            // 1 saniye sonra sonucu göster
+            setTimeout(() => {
+                loadingOverlay.classList.remove('show');
+                analysisResult.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+                
+                // Sohbet bölümünü göster
+                setTimeout(() => {
+                    chatSection.classList.add('show');
+                }, 300);
+            }, 1000);
+        });
+
+        // Sohbet fonksiyonu
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message === '') return;
+
+            addMessage(message, true);
+            chatInput.value = '';
+
+            // Scapula bilgisi kontrolü
+            const lowerMessage = message.toLowerCase();
+            if (lowerMessage.includes('scapula') || 
+                lowerMessage.includes('scapulae') || 
+                lowerMessage.includes('skalpula')) {
+                
+                setTimeout(() => {
+                    let response = '';
+                    
+                    // Hayvanlar arası fark sorusu kontrolü
+                    if (lowerMessage.includes('fark') || lowerMessage.includes('farklı') || 
+                        lowerMessage.includes('hayvan') || lowerMessage.includes('tür')) {
+                        
+                        response = `🔬 **Hayvanlar Arasında Scapula Farklılıkları**
+
+🐄 **İnekler (Ruminantlar)**
+✦ En geniş ve güçlü scapula yapısı
+✦ Belirgin acromion çıkıntısı
+✦ Güçlü spina scapulae
+✦ Ağır yük taşımaya uygun tasarım
+
+🐕 **Köpekler (Karnivorlar)**  
+✦ Orta boyutlu, atletik yapı
+✦ Hareket kabiliyetine odaklanmış
+✦ Esnek kas bağlantı noktaları
+✦ Avlama uygun dinamik yapı
+
+🐴 **Atlar (Equidae)**
+✦ Uzun ve ince yapılı
+✦ Koşu performansına optimize
+✦ Özel tuber spina scapulae
+✦ Hızlı hareket için tasarlanmış
+
+🐱 **Kediler (Felidae)**
+✦ Küçük ve çevik yapı
+✦ Süratle hareket edebilme
+✦ Tırmanma kabiliyetine uygun
+✦ Esnek omuz eklemi
+
+🔍 **Temel Farklar:**
+• Beslenme şekli → Kas yapısı
+• Yaşam tarzı → Kemik yoğunluğu  
+• Hareket biçimi → Scapula boyutu
+• Vücut ağırlığı → Güçlendirme yapıları`;
+                        
+                    } else {
+                        // Genel scapula bilgisi
+                        response = `🦴 **İnek Scapulası - Detaylı Bilgi**
+
+📍 **Anatomik Konum**
+✦ Omuz kuşağının temel kemiği
+✦ Göğüs kafesinin yan-arkasında
+✦ Sadece kaslarla gövdeye bağlı
+✦ Synsarcosis bağlantı türü
+
+🔬 **Yapısal Özellikler**
+✦ **Şekil:** Üçgen yassı kemik
+✦ **Yüzler:** Facies costalis (iç) & lateralis (dış)
+✦ **Çıkıntı:** Spina scapulae (belirgin)
+✦ **Eklem:** Articulation humeri ile humerusa bağlı
+
+⚡ **Fonksiyonel Görevler**
+• 🎯 Ön bacak hareketlerinin merkezi
+• 💪 Güçlü kas gruplarının bağlantı noktası
+• 🛡️ Omuz ekleminin stabilizasyonu
+• 🏃‍♂️ Hareket açıklığının düzenlenmesi
+
+🩺 **Veteriner Önem**
+✓ Topallık teşhisinde kritik nokta
+✓ Kas yaralanmalarının değerlendirilmesi  
+✓ Omuz displazisi tanısı
+✓ Performans veterinerliğinde temel
+
+💡 **İlginç Bilgiler**
+• Kürek kemiği adını şeklinden alır
+• Memelilerde clavicula kaybolmuştur
+• Ruminantlarda en gelişmiş halidir
+• Hareket özgürlüğünü maksimize eder`;
+                    }
+                    
+                    addMessage(response);
+                }, 1000);
+            } else {
+                setTimeout(() => {
+                    addMessage('Merhaba! Scapula hakkında bilgi almak için istediğinizi sorabilirsiniz. Örneğin: "scapula nedir?", "hayvanlar arasında farklar" gibi sorular sorabilirsiniz.');
+                }, 1000);
+            }
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Sayfa yüklendiğinde kamerayı otomatik başlat
+        window.addEventListener('load', () => {
+            // Otomatik başlatma kaldırıldı, kullanıcı butonla açacak
+        });
+
+        // Sayfa kapatılırken kamerayı kapat
+        window.addEventListener('beforeunload', () => {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+        });
+    </script>
+</body>
+</html>
