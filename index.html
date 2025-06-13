@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animal Bone Analysis System </title>
+    <title>Animal Bone Analysis System</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
+
         :root {
             --primary-color: #2563eb;
             --primary-dark: #1d4ed8;
@@ -615,9 +616,9 @@
                                 <div>Processing image data...</div>
                             </div>
                             <div class="analysis-content">
-                                <h2 class="analysis-title">FEMUR</h2>
+                                <h2 class="analysis-title">HUMERUS</h2>
                                 <div class="analysis-result">
-                                    <strong>Classification: Canine (Dog)</strong>
+                                    <strong>Classification: Equine (Horse)</strong>
                                 </div>
                             </div>
                         </div>
@@ -629,15 +630,15 @@
                 <div class="chat-container">
                     <div class="chat-header">
                         <h3>💬 Expert Knowledge Base</h3>
-                        <p>Ask questions about femur anatomy, classification, and veterinary applications</p>
+                        <p>Ask questions about humerus anatomy, classification, and veterinary applications</p>
                     </div>
                     <div class="chat-messages" id="chatMessages">
                         <div class="message bot-message">
-                            Welcome to the Veterinary Femur Analysis System. I'm here to provide detailed information about femur anatomy, classification differences between species, and clinical applications. How can I assist you today?
+                            Welcome to the Veterinary Humerus Analysis System. I'm here to provide detailed information about humerus anatomy, classification differences between species, and clinical applications. How can I assist you today?
                         </div>
                     </div>
                     <div class="chat-input-container">
-                        <textarea class="chat-input" id="chatInput" placeholder="Type your question about femur anatomy..." rows="1"></textarea>
+                        <textarea class="chat-input" id="chatInput" placeholder="Type your question about humerus anatomy..." rows="1"></textarea>
                         <button class="btn btn-primary" id="sendBtn">
                             <span>📤</span>
                             Send
@@ -791,15 +792,17 @@
             const typingIndicator = showTypingIndicator();
             const lowerMessage = message.toLowerCase();
             
-            if (lowerMessage.includes('femur') || 
-                lowerMessage.includes('thigh bone') || 
-                lowerMessage.includes('leg bone') ||
+            if (lowerMessage.includes('humerus') || 
+                lowerMessage.includes('upper arm') || 
+                lowerMessage.includes('arm bone') ||
                 lowerMessage.includes('difference') || 
                 lowerMessage.includes('different') || 
                 lowerMessage.includes('animal') || 
                 lowerMessage.includes('species') ||
                 lowerMessage.includes('anatomy') ||
-                lowerMessage.includes('bone')) {
+                lowerMessage.includes('bone') ||
+                lowerMessage.includes('horse') ||
+                lowerMessage.includes('equine')) {
                 
                 setTimeout(() => {
                     removeTypingIndicator(typingIndicator);
@@ -808,142 +811,157 @@
                     if (lowerMessage.includes('difference') || lowerMessage.includes('different') || 
                         lowerMessage.includes('animal') || lowerMessage.includes('species')) {
                         
-                        response = `🔬 COMPARATIVE FEMUR ANATOMY ACROSS SPECIES
-
-🐕 CANINE (DOMESTIC DOG) - Canis familiaris
-• Morphology: Medium-sized, robust long bone structure
-• Femoral Head: Spherical, well-defined for hip joint articulation
-• Greater Trochanter: Prominent lateral projection for muscle attachment
-• Adaptation: Dynamic locomotion, jumping, running capabilities
-• Clinical Significance: Standard model for small animal orthopedic procedures
-
-🐄 BOVINE (CATTLE) - Bos taurus  
-• Morphology: Largest and most massive femur structure
-• Weight-bearing Design: Thick cortical bone for supporting heavy body weight
-• Condylar Features: Broad, robust condyles for knee joint stability
-• Adaptation: Quadrupedal stance, limited agility, grazing posture
-• Clinical Significance: Reference for large animal veterinary studies
+                        response = `🔬 COMPARATIVE HUMERUS ANATOMY ACROSS SPECIES
 
 🐴 EQUINE (HORSE) - Equus caballus
-• Morphology: Elongated, streamlined for speed and endurance
-• Performance Features: Optimized bone density and length ratios
-• Muscular Ridges: Enhanced for powerful hindlimb propulsion
-• Adaptation: High-speed galloping, jumping, athletic performance
-• Clinical Significance: Critical for performance horse evaluation
+• Morphology: Large, robust long bone optimized for power and speed
+• Humeral Head: Large spherical head for strong shoulder articulation
+• Greater Tubercle: Massive projection for powerful muscle attachments
+• Deltoid Tuberosity: Well-developed for deltoid muscle insertion
+• Adaptation: High-speed locomotion, powerful forelimb propulsion
+• Clinical Significance: Performance evaluation and lameness diagnosis
+
+🐄 BOVINE (CATTLE) - Bos taurus  
+• Morphology: Thick, heavy bone structure for weight-bearing
+• Weight-bearing Design: Robust cortical bone for supporting large body mass
+• Condylar Features: Broad articular surfaces for stability
+• Adaptation: Quadrupedal stance, limited mobility, grazing posture
+• Clinical Significance: Large animal orthopedic reference
+
+🐕 CANINE (DOMESTIC DOG) - Canis familiaris
+• Morphology: Medium-sized, proportionate to body size
+• Flexibility Features: Allows for varied locomotion patterns
+• Bone Density: Moderate density for agility and strength
+• Adaptation: Running, jumping, diverse movement patterns
+• Clinical Significance: Small animal orthopedic standard
 
 🐱 FELINE (DOMESTIC CAT) - Felis catus
 • Morphology: Compact, lightweight but strong design
-• Flexibility Features: Allows for exceptional jumping and climbing
-• Bone Density: High strength-to-weight ratio
-• Adaptation: Predatory leaping, tree climbing, agile movement
-• Clinical Significance: Model for studying bone elasticity and joint mobility
+• Climbing Adaptation: Enhanced for arboreal locomotion
+• Muscle Attachment: Optimized for powerful forelimb movements
+• Adaptation: Climbing, jumping, predatory behavior
+• Clinical Significance: Comparative anatomy studies
 
-🐰 LAGOMORPH (RABBIT) - Oryctolagus cuniculus
-• Morphology: Specialized for powerful hindlimb propulsion
-• Elongated Design: Extended femur for hopping locomotion
-• Muscle Attachment: Large muscle attachment areas for jumping power
-• Adaptation: Explosive hopping, escape mechanisms
-• Clinical Significance: Research model for bone growth studies
+🐷 PORCINE (PIG) - Sus scrofa
+• Morphology: Robust structure similar to human proportions
+• Research Value: Often used as human analogue in research
+• Bone Quality: Dense cortical bone with good healing properties
+• Adaptation: Ground-dwelling, rooting behavior
+• Clinical Significance: Biomedical research model
 
 📊 KEY MORPHOMETRIC DIFFERENCES:
-• Length Ratio: Equine > Bovine > Canine > Feline > Lagomorph (relative to body size)
-• Weight-bearing Capacity: Bovine > Equine > Canine > Feline > Lagomorph
-• Agility Index: Feline > Lagomorph > Canine > Equine > Bovine
-• Bone Cortical Thickness: Proportional to mechanical loading demands
+• Length: Equine > Bovine > Porcine > Canine > Feline (absolute measurements)
+• Robusticity: Bovine > Equine > Porcine > Canine > Feline
+• Athletic Adaptation: Equine > Feline > Canine > Porcine > Bovine
+• Cortical Thickness: Proportional to mechanical loading demands
 
 🎯 VETERINARY CLINICAL APPLICATIONS:
-✓ Species-specific surgical approaches and implant selection
-✓ Comparative pathology and fracture pattern analysis
-✓ Biomechanical modeling for prosthetic design
-✓ Growth plate assessment and developmental disorders
-✓ Orthopedic rehabilitation protocols
-✓ Evolutionary anatomy and locomotion studies`;
-                        
+✓ Species-specific surgical approaches and implant design
+✓ Comparative biomechanics and locomotion analysis
+✓ Fracture pattern recognition and treatment protocols
+✓ Performance evaluation in athletic animals
+✓ Orthopedic rehabilitation strategies
+✓ Evolutionary anatomy and comparative physiology`;
+
                     } else {
-                        response = `🦴 CANINE FEMUR - COMPREHENSIVE ANATOMICAL PROFILE
+                        response = `🦴 EQUINE HUMERUS - COMPREHENSIVE ANATOMICAL PROFILE
 
 📍 ANATOMICAL CLASSIFICATION & LOCATION
-• Bone Type: Long bone (Os femoris)
-• Anatomical Position: Proximal hindlimb, connecting hip to knee
-• Joint Articulations: Hip joint (proximally), Stifle joint (distally)
-• Orientation: Oblique positioning for optimal weight distribution
+• Bone Type: Long bone (Os humeri)
+• Anatomical Position: Proximal forelimb, upper arm segment
+• Joint Articulations: Shoulder joint (proximally), Elbow joint (distally)
+• Orientation: Nearly vertical in standing position
 
 🔬 DETAILED MORPHOLOGICAL FEATURES
-• Femoral Head: Spherical articular surface for acetabular socket
-• Femoral Neck: Constricted region connecting head to shaft
-• Greater Trochanter: Large lateral prominence for muscle attachment
-• Lesser Trochanter: Smaller medial projection (muscle insertion point)
-• Femoral Shaft: Strong diaphysis with slight cranial curvature
-• Distal Condyles: Medial and lateral condyles for knee articulation
-• Intercondylar Fossa: Deep groove between condyles
-• Trochlear Groove: Articular surface for patella movement
+• Humeral Head: Large spherical articular surface for glenoid cavity
+• Anatomical Neck: Slight constriction below the head
+• Greater Tubercle: Large lateral prominence for muscle attachment
+• Lesser Tubercle: Smaller medial projection for subscapularis insertion
+• Intertubercular Groove: Deep groove between tubercles for biceps tendon
+• Humeral Shaft: Strong diaphysis with spiral groove for radial nerve
+• Deltoid Tuberosity: Prominent lateral roughened area
+• Distal Condyles: Medial and lateral condyles for elbow articulation
+• Olecranon Fossa: Deep posterior depression for olecranon process
 
 ⚡ FUNCTIONAL BIOMECHANICS
-• Primary Function: Weight bearing and locomotion coordination
-• Load Distribution: Transfer of body weight from spine to hindlimbs
-• Movement Facilitation: Hip and knee joint motion coordination
-• Power Generation: Muscle attachment for propulsive forces
-• Shock Absorption: Trabecular bone structure for impact distribution
+• Primary Function: Forelimb locomotion and weight bearing
+• Power Generation: Attachment site for major propulsive muscles
+• Shock Absorption: Distributes impact forces during locomotion
+• Range of Motion: Facilitates shoulder and elbow joint movement
+• Performance: Critical for athletic performance in horses
 
 🏗️ MUSCULAR ARCHITECTURE CONNECTIONS
-• Hip Flexors: Iliopsoas muscle group attachment
-• Hip Extensors: Gluteal muscles and biceps femoris
-• Adductors: Adductor magnus and gracilis muscles
-• Quadriceps Group: Rectus femoris origin point
-• Hamstring Group: Biceps femoris, semitendinosus attachments
+• Shoulder Flexors: Biceps brachii, coracobrachialis
+• Shoulder Extensors: Triceps brachii, latissimus dorsi
+• Adductors: Pectoralis muscles, subscapularis
+• Abductors: Supraspinatus, infraspinatus, deltoid
+• Stabilizers: Teres major and minor, rhomboideus
 
 🩺 CLINICAL VETERINARY SIGNIFICANCE
-• Fracture Management: Common site for traumatic injuries
-  - Femoral neck fractures (older dogs)
-  - Diaphyseal fractures (high-energy trauma)
-  - Supracondylar fractures (young dogs)
-• Hip Dysplasia: Femoral head/neck abnormalities
-• Growth Disorders: Slipped capital femoral epiphysis
-• Degenerative Conditions: Osteoarthritis of hip and knee
+• Fracture Management: Common injury sites include:
+  - Humeral shaft fractures (spiral fractures common)
+  - Condylar fractures in young horses
+  - Stress fractures in performance horses
+• Shoulder Conditions: 
+  - Bicipital bursitis
+  - Shoulder joint instability
+  - Supraspinatus tendinopathy
+• Elbow Problems:
+  - Olecranon bursitis
+  - Elbow joint osteoarthritis
+  - Lateral epicondylitis
 • Surgical Procedures:
-  - Total hip replacement
-  - Femoral head ostectomy
-  - Fracture repair with plates/pins
+  - Internal fixation with plates and screws
+  - Arthroscopic shoulder surgery
+  - Elbow arthroscopy
 
-📊 MORPHOMETRIC STANDARDS (Medium-sized Dog, 25kg)
-• Total Length: 18-22 cm
-• Shaft Diameter: 12-16 mm
-• Femoral Head Diameter: 18-22 mm
-• Neck-shaft Angle: 130-140 degrees
-• Bone Density: 1.8-2.2 g/cm³
-• Weight: Approximately 80-120g
+📊 MORPHOMETRIC STANDARDS (500kg Thoroughbred)
+• Total Length: 35-40 cm
+• Shaft Diameter: 25-30 mm
+• Head Diameter: 45-50 mm
+• Bone Density: 1.9-2.3 g/cm³
+• Weight: Approximately 1.5-2.0 kg
+• Cortical Thickness: 8-12 mm
 
 🔍 RADIOGRAPHIC LANDMARKS
-• Femoral Head: Spherical opacity in hip joint
-• Greater Trochanter: Lateral prominence
-• Femoral Shaft: Straight to slightly curved diaphysis
+• Humeral Head: Large spherical opacity
+• Greater Tubercle: Prominent lateral projection
+• Humeral Shaft: Straight to slightly curved diaphysis
 • Condyles: Dual articular surfaces at distal end
-• Growth Plates: Visible in young dogs (closure at 12-18 months)
+• Radial Nerve Groove: Spiral radiolucent line on caudal shaft
 
 💡 RESEARCH & EDUCATIONAL APPLICATIONS
-• Comparative anatomy studies between breeds
-• Biomechanical stress analysis
-• Orthopedic implant development and testing
+• Equine locomotion biomechanics
+• Performance horse evaluation
+• Comparative anatomy between breeds
+• Orthopedic implant development
 • Veterinary education standard
-• Canine locomotion research
-• Breed-specific morphological variations
+• Racing injury prevention studies
 
 ⚕️ COMMON PATHOLOGICAL CONDITIONS
-• Hip Dysplasia: Malformation of femoral head and acetabulum
-• Legg-Calvé-Perthes Disease: Avascular necrosis of femoral head
-• Patellar Luxation: Associated femoral trochlear groove abnormalities
-• Cruciate Ligament Disease: Secondary femoral condyle changes
-• Osteosarcoma: Primary bone tumor (distal femur common site)
+• Osteochondritis Dissecans: Shoulder and elbow joints
+• Stress Fractures: High-performance athletes
+• Osteoarthritis: Degenerative joint disease
+• Bicipital Tendinitis: Inflammation of biceps tendon
+• Humeral Condylar Fractures: Young, active horses
+• Bone Cysts: Subchondral bone lesions
 
-This comprehensive profile serves as a reference for veterinary practitioners, researchers, and students studying canine orthopedic anatomy and pathology.`;
+🏇 PERFORMANCE CONSIDERATIONS
+• Athletic Evaluation: Soundness examinations
+• Training Load: Monitoring for overuse injuries
+• Rehabilitation: Post-injury return to performance
+• Preventive Care: Regular monitoring of high-risk areas
+• Breed Variations: Different conformational requirements
+
+This comprehensive profile serves as a reference for equine veterinary practitioners, researchers, and students studying equine orthopedic anatomy and performance medicine.`;
                     }
-                    
+
                     addMessage(response);
                 }, 2500);
             } else {
                 setTimeout(() => {
                     removeTypingIndicator(typingIndicator);
-                    addMessage('I specialize in femur anatomy and veterinary bone classification. Please ask me about femur structure, species differences, clinical applications, or related anatomical topics. For example: "Compare femur anatomy between species" or "What are the clinical features of canine femur?"');
+                    addMessage('I specialize in humerus anatomy and veterinary bone classification. Please ask me about humerus structure, species differences, clinical applications, or related anatomical topics. For example: "Compare humerus anatomy between species" or "What are the clinical features of equine humerus?"');
                 }, 1500);
             }
         }
