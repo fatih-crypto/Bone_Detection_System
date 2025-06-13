@@ -1,937 +1,684 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animal Bone Analysis System </title>
+    <title>Scapula Analiz Sistemi</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        :root {
-            --primary-color: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary-color: #0891b2;
-            --accent-color: #059669;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --error-color: #ef4444;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
-            --text-light: #9ca3af;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-tertiary: #f1f5f9;
-            --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-            --radius-sm: 6px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --radius-xl: 16px;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: var(--text-primary);
-            line-height: 1.6;
-        }
+```
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+    }
 
-        .app-container {
-            min-height: 100vh;
-            padding: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
 
-        .main-wrapper {
-            width: 100%;
-            max-width: 1400px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-xl);
-            overflow: hidden;
-        }
+    .header {
+        background: linear-gradient(45deg, #4CAF50, #45a049);
+        color: white;
+        text-align: center;
+        padding: 30px;
+    }
 
-        .header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+    .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="rgba(255,255,255,0.1)" fill-opacity="0.1"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>') repeat;
-            opacity: 0.1;
-        }
+    .header p {
+        font-size: 1.2em;
+        opacity: 0.9;
+    }
 
-        .header-content {
-            position: relative;
-            z-index: 1;
-        }
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        padding: 40px;
+    }
 
-        .header h1 {
-            font-size: 2.75rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(45deg, #ffffff, #e2e8f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+    .camera-section {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
 
-        .header .subtitle {
-            font-size: 1.25rem;
-            font-weight: 400;
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
+    .camera-container {
+        position: relative;
+        background: #f8f9fa;
+        border: 3px dashed #ddd;
+        border-radius: 15px;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
 
-        .header .version {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+    .camera-placeholder {
+        color: #666;
+        font-size: 1.2em;
+        text-align: center;
+    }
 
+    .video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .camera-controls {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 25px;
+        font-size: 1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: linear-gradient(45deg, #007bff, #0056b3);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+    }
+
+    .btn-success {
+        background: linear-gradient(45deg, #28a745, #1e7e34);
+        color: white;
+    }
+
+    .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+    }
+
+    .results-section {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .analysis-result {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s ease;
+        position: relative;
+    }
+
+    .analysis-result.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .analysis-result.loading h2,
+    .analysis-result.loading .animal-type {
+        opacity: 0;
+    }
+
+    .analysis-result h2 {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        transition: opacity 0.3s ease;
+    }
+
+    .captured-image {
+        width: 100%;
+        max-width: 300px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .animal-type {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 15px;
+        border-radius: 10px;
+        font-size: 1.3em;
+        font-weight: bold;
+        transition: opacity 0.3s ease;
+    }
+
+    .typing-indicator {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #e9ecef;
+        color: #666;
+        padding: 12px 18px;
+        border-radius: 18px;
+        max-width: 80%;
+        margin-bottom: 15px;
+    }
+
+    .typing-dots {
+        display: flex;
+        gap: 3px;
+    }
+
+    .typing-dots span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #666;
+        animation: typing 1.4s infinite ease-in-out;
+    }
+
+    .typing-dots span:nth-child(1) { animation-delay: 0s; }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typing {
+        0%, 60%, 100% { opacity: 0.3; transform: scale(0.8); }
+        30% { opacity: 1; transform: scale(1); }
+    }
+
+    .chat-section {
+        grid-column: 1 / -1;
+        margin-top: 20px;
+        padding-top: 30px;
+        border-top: 2px solid #eee;
+        display: none;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.5s ease;
+    }
+
+    .chat-section.show {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .chat-header {
+        background: linear-gradient(45deg, #17a2b8, #138496);
+        color: white;
+        padding: 20px;
+        border-radius: 15px 15px 0 0;
+        text-align: center;
+        position: relative;
+    }
+
+    .chat-header::before {
+        content: "💬";
+        font-size: 2em;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .loading-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(102, 126, 234, 0.9);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        color: white;
+        font-size: 1.2em;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .loading-overlay.show {
+        display: flex;
+    }
+
+    .spinner {
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top: 3px solid white;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .chat-container {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 0 0 15px 15px;
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chat-messages {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        background: white;
+    }
+
+    .message {
+        margin-bottom: 15px;
+        padding: 12px 18px;
+        border-radius: 18px;
+        max-width: 80%;
+        word-wrap: break-word;
+    }
+
+    .user-message {
+        background: #007bff;
+        color: white;
+        align-self: flex-end;
+        margin-left: auto;
+    }
+
+    .bot-message {
+        background: #e9ecef;
+        color: #333;
+        align-self: flex-start;
+    }
+
+    .chat-input-container {
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 0 0 15px 15px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .chat-input {
+        flex: 1;
+        padding: 12px 18px;
+        border: 2px solid #dee2e6;
+        border-radius: 25px;
+        font-size: 1em;
+        outline: none;
+        transition: border-color 0.3s ease;
+    }
+
+    .chat-input:focus {
+        border-color: #007bff;
+    }
+
+    .btn-chat {
+        background: linear-gradient(45deg, #007bff, #0056b3);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .btn-chat:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+    }
+
+    @media (max-width: 768px) {
         .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            padding: 2.5rem;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 20px;
         }
-
-        .section {
-            background: var(--bg-primary);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            transition: all 0.3s ease;
+        
+        .header h1 {
+            font-size: 2em;
         }
-
-        .section:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-2px);
+        
+        .analysis-result h2 {
+            font-size: 2em;
         }
+    }
+</style>
+```
 
-        .section-header {
-            padding: 1.5rem;
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .section-content {
-            padding: 1.5rem;
-        }
-
-        .camera-container {
-            position: relative;
-            background: var(--bg-tertiary);
-            border: 2px dashed var(--border-color);
-            border-radius: var(--radius-md);
-            height: 320px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .camera-container:hover {
-            border-color: var(--primary-color);
-            background: rgba(37, 99, 235, 0.05);
-        }
-
-        .camera-placeholder {
-            text-align: center;
-            color: var(--text-light);
-            font-size: 1.125rem;
-        }
-
-        .camera-placeholder .icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.6;
-        }
-
-        .video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: var(--radius-sm);
-        }
-
-        .controls {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: var(--radius-md);
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            font-family: inherit;
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            background: var(--primary-dark);
-            box-shadow: var(--shadow-md);
-            transform: translateY(-1px);
-        }
-
-        .btn-success {
-            background: var(--success-color);
-            color: white;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-success:hover:not(:disabled) {
-            background: #059669;
-            box-shadow: var(--shadow-md);
-            transform: translateY(-1px);
-        }
-
-        .analysis-card {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: var(--radius-lg);
-            text-align: center;
-            position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-            overflow: hidden;
-        }
-
-        .analysis-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
-        }
-
-        .analysis-card:hover::before {
-            transform: translateX(100%);
-        }
-
-        .analysis-card.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .analysis-card.loading .analysis-content {
-            opacity: 0;
-        }
-
-        .analysis-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .captured-image {
-            width: 100%;
-            max-width: 280px;
-            height: 180px;
-            object-fit: cover;
-            border-radius: var(--radius-md);
-            margin-bottom: 1.5rem;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            box-shadow: var(--shadow-md);
-        }
-
-        .analysis-result {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 1.25rem;
-            border-radius: var(--radius-md);
-            font-size: 1.125rem;
-            font-weight: 600;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .loading-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(37, 99, 235, 0.95);
-            backdrop-filter: blur(5px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius-lg);
-            color: white;
-            font-size: 1.125rem;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .loading-overlay.show {
-            display: flex;
-        }
-
-        .spinner {
-            width: 48px;
-            height: 48px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .chat-section {
-            grid-column: 1 / -1;
-            margin-top: 2rem;
-            display: none;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.5s ease;
-        }
-
-        .chat-section.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .chat-container {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-        }
-
-        .chat-header {
-            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
-            color: white;
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .chat-header h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .chat-header p {
-            opacity: 0.9;
-            font-size: 0.875rem;
-        }
-
-        .chat-messages {
-            height: 400px;
-            padding: 1.5rem;
-            overflow-y: auto;
-            background: var(--bg-secondary);
-        }
-
-        .chat-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .chat-messages::-webkit-scrollbar-track {
-            background: var(--bg-tertiary);
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 3px;
-        }
-
-        .message {
-            margin-bottom: 1rem;
-            padding: 0.875rem 1.25rem;
-            border-radius: var(--radius-lg);
-            max-width: 85%;
-            word-wrap: break-word;
-            font-size: 0.875rem;
-            line-height: 1.5;
-        }
-
-        .user-message {
-            background: var(--primary-color);
-            color: white;
-            margin-left: auto;
-            border-bottom-right-radius: var(--radius-sm);
-        }
-
-        .bot-message {
-            background: white;
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            border-bottom-left-radius: var(--radius-sm);
-            white-space: pre-line;
-        }
-
-        .typing-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: white;
-            color: var(--text-secondary);
-            padding: 0.875rem 1.25rem;
-            border-radius: var(--radius-lg);
-            max-width: 85%;
-            margin-bottom: 1rem;
-            border: 1px solid var(--border-color);
-        }
-
-        .typing-dots {
-            display: flex;
-            gap: 4px;
-        }
-
-        .typing-dots span {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--text-light);
-            animation: typing 1.4s infinite ease-in-out;
-        }
-
-        .typing-dots span:nth-child(1) { animation-delay: 0s; }
-        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typing {
-            0%, 60%, 100% { opacity: 0.3; transform: scale(0.8); }
-            30% { opacity: 1; transform: scale(1); }
-        }
-
-        .chat-input-container {
-            padding: 1.5rem;
-            background: var(--bg-primary);
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            gap: 1rem;
-            align-items: flex-end;
-        }
-
-        .chat-input {
-            flex: 1;
-            padding: 0.875rem 1.25rem;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            font-size: 0.875rem;
-            font-family: inherit;
-            outline: none;
-            transition: all 0.2s ease;
-            resize: none;
-            min-height: 44px;
-            max-height: 120px;
-        }
-
-        .chat-input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .status-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success-color);
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-top: 1rem;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--success-color);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        @media (max-width: 1024px) {
-            .main-content {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                padding: 1.5rem;
-            }
-            
-            .app-container {
-                padding: 1rem;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .analysis-title {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .header {
-                padding: 2rem 1rem;
-            }
-            
-            .controls {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
 </head>
 <body>
-    <div class="app-container">
-        <div class="main-wrapper">
-            <header class="header">
-                <div class="header-content">
-                    <h1>Veterinary Scapula Analysis System</h1>
-                    <span class="version">Version 1.0</span>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 Kemik Tespit Programı</h1>
+            <p>Veteriner Kemik Analizi ve Bilgi Platformu</p>
+        </div>
+
+```
+    <div class="main-content">
+        <div class="camera-section">
+            <h3>📸 Kamera Analiz</h3>
+            <div class="camera-container" id="cameraContainer">
+                <div class="camera-placeholder" id="cameraPlaceholder">
+                    <div>📷</div>
+                    <div>Kamerayı başlatın</div>
                 </div>
-            </header>
-
-            <div class="main-content">
-                <section class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">
-                            <span>📷</span>
-                            Image Capture & Analysis
-                        </h2>
-                    </div>
-                    <div class="section-content">
-                        <div class="camera-container" id="cameraContainer">
-                            <div class="camera-placeholder" id="cameraPlaceholder">
-                                <div class="icon">📸</div>
-                                <div>Click to activate camera</div>
-                            </div>
-                            <video id="video" class="video" style="display: none;" autoplay playsinline></video>
-                        </div>
-                        <div class="controls">
-                            <button class="btn btn-primary" id="startCamera">
-                                <span>▶</span>
-                                Activate Camera
-                            </button>
-                            <button class="btn btn-success" id="analyzeBtn">
-                                <span>🔬</span>
-                                Analyze Sample
-                            </button>
-                        </div>
-                        <div class="status-indicator" style="display: none;" id="statusIndicator">
-                            <div class="status-dot"></div>
-                            <span>System Ready</span>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">
-                            <span>📊</span>
-                            Classification Results
-                        </h2>
-                    </div>
-                    <div class="section-content">
-                        <div class="analysis-card" id="analysisResult">
-                            <div class="loading-overlay" id="loadingOverlay">
-                                <div class="spinner"></div>
-                                <div>Processing image data...</div>
-                            </div>
-                            <div class="analysis-content">
-                                <h2 class="analysis-title">SCAPULA</h2>
-                                <div class="analysis-result">
-                                    <strong>Classification: Bovine (Cow)</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <video id="video" class="video" style="display: none;" autoplay playsinline></video>
             </div>
+            <div class="camera-controls">
+                <button class="btn btn-primary" id="startCamera">Kamerayı Başlat</button>
+                <button class="btn btn-success" id="analyzeBtn">Analiz Et</button>
+            </div>
+        </div>
 
-            <div class="chat-section" id="chatSection">
-                <div class="chat-container">
-                    <div class="chat-header">
-                        <h3>💬 Expert Knowledge Base</h3>
-                        <p>Ask questions about scapula anatomy, classification, and veterinary applications</p>
-                    </div>
-                    <div class="chat-messages" id="chatMessages">
-                        <div class="message bot-message">
-                            Welcome to the Veterinary Scapula Analysis System. I'm here to provide detailed information about scapula anatomy, classification differences between species, and clinical applications. How can I assist you today?
-                        </div>
-                    </div>
-                    <div class="chat-input-container">
-                        <textarea class="chat-input" id="chatInput" placeholder="Type your question about scapula anatomy..." rows="1"></textarea>
-                        <button class="btn btn-primary" id="sendBtn">
-                            <span>📤</span>
-                            Send
-                        </button>
-                    </div>
+        <div class="results-section">
+            <h3>📊 Analiz Sonuçları</h3>
+            <div class="analysis-result" id="analysisResult">
+                <div class="loading-overlay" id="loadingOverlay">
+                    <div class="spinner"></div>
+                    <div>Analiz ediliyor...</div>
+                </div>
+                <h2>SCAPULA</h2>
+                <div class="animal-type">
+                    <strong>Hayvanın Türü: İNEK</strong>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        let stream = null;
-        const video = document.getElementById('video');
-        const cameraPlaceholder = document.getElementById('cameraPlaceholder');
-        const startCameraBtn = document.getElementById('startCamera');
-        const analyzeBtn = document.getElementById('analyzeBtn');
-        const analysisResult = document.getElementById('analysisResult');
-        const chatMessages = document.getElementById('chatMessages');
-        const chatInput = document.getElementById('chatInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const statusIndicator = document.getElementById('statusIndicator');
-
-        // Auto-resize textarea
-        chatInput.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-        });
-
-        // Camera initialization
-        startCameraBtn.addEventListener('click', async () => {
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
-                        facingMode: 'environment',
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    },
-                    audio: false 
-                });
-                video.srcObject = stream;
-                video.style.display = 'block';
-                cameraPlaceholder.style.display = 'none';
-                startCameraBtn.innerHTML = '<span>✓</span>Camera Active';
-                startCameraBtn.disabled = true;
-                statusIndicator.style.display = 'flex';
-            } catch (err) {
-                console.error('Camera access error:', err);
-                alert('Unable to access camera. Please ensure camera permissions are granted and try again.');
-            }
-        });
-
-        // Analysis process
-        analyzeBtn.addEventListener('click', () => {
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            const chatSection = document.getElementById('chatSection');
-            
-            // Capture image
-            capturePhoto();
-            
-            // Show loading state
-            analysisResult.classList.add('show', 'loading');
-            loadingOverlay.classList.add('show');
-            
-            // Simulate analysis process
-            setTimeout(() => {
-                loadingOverlay.classList.remove('show');
-                analysisResult.classList.remove('loading');
-                analysisResult.style.background = 'linear-gradient(135deg, #059669 0%, #10b981 100%)';
-                
-                // Show chat section
-                setTimeout(() => {
-                    chatSection.classList.add('show');
-                }, 500);
-            }, 2500);
-        });
-
-        // Photo capture
-        function capturePhoto() {
-            if (video.srcObject) {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                ctx.drawImage(video, 0, 0);
-                
-                const imageData = canvas.toDataURL('image/jpeg', 0.9);
-                
-                // Remove existing image
-                const existingImage = analysisResult.querySelector('.captured-image');
-                if (existingImage) {
-                    existingImage.remove();
-                }
-                
-                // Add new captured image
-                const img = document.createElement('img');
-                img.src = imageData;
-                img.className = 'captured-image';
-                img.style.display = 'none';
-                
-                const analysisContent = analysisResult.querySelector('.analysis-content');
-                const title = analysisContent.querySelector('.analysis-title');
-                analysisContent.insertBefore(img, title);
-                
-                // Show image after analysis
-                setTimeout(() => {
-                    img.style.display = 'block';
-                }, 2500);
-            }
-        }
-
-        // Chat functionality
-        function addMessage(message, isUser = false) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
-            messageDiv.textContent = message;
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function showTypingIndicator() {
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'typing-indicator';
-            typingDiv.innerHTML = `
-                <span>AI Assistant is typing</span>
-                <div class="typing-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+    <div class="chat-section">
+        <div class="chat-header">
+            <h3>💬 Bilgi Sohbet Merkezi</h3>
+            <p>Scapula hakkında soru sorun, bilgi alın</p>
+        </div>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    Merhaba! Scapula hakkında bilgi almak için istediğinizi sorabilirsiniz.
                 </div>
-            `;
-            chatMessages.appendChild(typingDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            return typingDiv;
+            </div>
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Mesajınızı yazın...">
+                <button class="btn-chat" id="sendBtn">Gönder</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let stream = null;
+    const video = document.getElementById('video');
+    const cameraPlaceholder = document.getElementById('cameraPlaceholder');
+    const startCameraBtn = document.getElementById('startCamera');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const analysisResult = document.getElementById('analysisResult');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+
+    // Kamera başlatma
+    startCameraBtn.addEventListener('click', async () => {
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ 
+                video: { facingMode: 'environment' },
+                audio: false 
+            });
+            video.srcObject = stream;
+            video.style.display = 'block';
+            cameraPlaceholder.style.display = 'none';
+            startCameraBtn.textContent = 'Kamera Açık';
+            startCameraBtn.disabled = true;
+        } catch (err) {
+            console.error('Kamera erişim hatası:', err);
+            alert('Kamera erişimi sağlanamadı. Lütfen kamera izinlerini kontrol edin.');
         }
+    });
 
-        function removeTypingIndicator(typingIndicator) {
-            if (typingIndicator && typingIndicator.parentNode) {
-                typingIndicator.parentNode.removeChild(typingIndicator);
-            }
-        }
-
-        function sendMessage() {
-            const message = chatInput.value.trim();
-            if (message === '') return;
-
-            addMessage(message, true);
-            chatInput.value = '';
-            chatInput.style.height = 'auto';
-
-            const typingIndicator = showTypingIndicator();
-            const lowerMessage = message.toLowerCase();
+    // Analiz butonu
+    analyzeBtn.addEventListener('click', () => {
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const chatSection = document.querySelector('.chat-section');
+        
+        // Fotoğraf çek
+        capturePhoto();
+        
+        // Loading başlat ve text'i gizle
+        analysisResult.classList.add('show', 'loading');
+        loadingOverlay.classList.add('show');
+        
+        // 1 saniye sonra sonucu göster
+        setTimeout(() => {
+            loadingOverlay.classList.remove('show');
+            analysisResult.classList.remove('loading');
+            analysisResult.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
             
-            if (lowerMessage.includes('scapula') || 
-                lowerMessage.includes('scapulae') || 
-                lowerMessage.includes('shoulder blade') ||
-                lowerMessage.includes('difference') || 
-                lowerMessage.includes('different') || 
-                lowerMessage.includes('animal') || 
-                lowerMessage.includes('species') ||
-                lowerMessage.includes('anatomy') ||
-                lowerMessage.includes('bone')) {
-                
-                setTimeout(() => {
-                    removeTypingIndicator(typingIndicator);
-                    let response = '';
-                    
-                    if (lowerMessage.includes('difference') || lowerMessage.includes('different') || 
-                        lowerMessage.includes('animal') || lowerMessage.includes('species')) {
-                        
-                        response = `🔬 COMPARATIVE SCAPULA ANATOMY ACROSS SPECIES
+            // Sohbet bölümünü göster
+            setTimeout(() => {
+                chatSection.classList.add('show');
+            }, 300);
+        }, 1000);
+    });
 
-🐄 BOVINE (CATTLE) - Bos taurus
-• Morphology: Largest and most robust scapula structure
-• Acromion Process: Highly developed and prominent
-• Spina Scapulae: Thick, well-defined ridge
-• Adaptation: Heavy-duty load bearing, grazing posture
-• Clinical Significance: Common reference for large animal veterinary studies
-
-🐕 CANINE (DOMESTIC DOG) - Canis familiaris  
-• Morphology: Medium-sized, athletic configuration
-• Mobility Focus: Enhanced range of motion capabilities
-• Muscle Attachment: Optimized for dynamic movement patterns
-• Adaptation: Predatory locomotion, varied gait patterns
-• Clinical Significance: Standard model for small animal orthopedics
-
-🐴 EQUINE (HORSE) - Equus caballus
-• Morphology: Elongated, streamlined structure
-• Performance Optimization: Designed for sustained high-speed locomotion
-• Tuber Spina: Specialized prominence for muscle attachment
-• Adaptation: Cursorial lifestyle, galloping mechanics
-• Clinical Significance: Critical for performance horse evaluation
-
-🐱 FELINE (DOMESTIC CAT) - Felis catus
-• Morphology: Compact, highly flexible design
-• Agility Features: Maximum range of motion capability
-• Climbing Adaptation: Specialized for vertical movement
-• Scapular Mobility: Enhanced shoulder joint flexibility
-• Clinical Significance: Model for studying joint mobility disorders
-
-📊 KEY MORPHOMETRIC DIFFERENCES:
-• Size Ratio: Bovine > Equine > Canine > Feline
-• Muscle Attachment Area: Proportional to body mass requirements
-• Mobility Index: Feline > Canine > Equine > Bovine
-• Bone Density: Correlates with mechanical loading demands
-
-🎯 VETERINARY CLINICAL APPLICATIONS:
-✓ Species-specific diagnostic imaging protocols
-✓ Comparative pathology assessment
-✓ Surgical approach planning
-✓ Biomechanical analysis for rehabilitation
-✓ Evolutionary anatomy research`;
-                        
-                    } else {
-                        response = `🦴 BOVINE SCAPULA - COMPREHENSIVE ANATOMICAL PROFILE
-
-📍 ANATOMICAL CLASSIFICATION & LOCATION
-• Bone Type: Flat bone (Os scapulae)
-• Anatomical Position: Lateral thoracic wall, dorsal to ribs 2-8
-• Attachment: Synsarcosis (muscular attachment only)
-• Orientation: Oblique positioning relative to vertebral column
-
-🔬 DETAILED MORPHOLOGICAL FEATURES
-• Overall Shape: Triangular flat bone with three borders
-• Costal Surface (Facies costalis): Smooth, slightly concave
-• Lateral Surface (Facies lateralis): Divided by spina scapulae
-• Spina Scapulae: Prominent ridge extending from vertebral to glenoid border
-• Acromion Process: Well-developed cranial projection
-• Glenoid Cavity: Shallow articular surface for humeral head
-
-⚡ FUNCTIONAL BIOMECHANICS
-• Primary Function: Forelimb suspension and movement coordination
-• Muscle Attachments: 17+ major muscle groups
-• Joint Articulation: Glenohumeral joint formation
-• Load Distribution: Transfer of body weight to forelimbs
-• Movement Facilitation: Scapulohumeral rhythm coordination
-
-🏗️ MUSCULAR ARCHITECTURE CONNECTIONS
-• Extrinsic Muscles: Trapezius, rhomboideus, serratus ventralis
-• Intrinsic Muscles: Supraspinatus, infraspinatus, subscapularis
-• Stabilizers: Teres major/minor, deltoideus
-• Dynamic Movers: Biceps brachii, triceps brachii attachments
-
-🩺 CLINICAL VETERINARY SIGNIFICANCE
-• Lameness Evaluation: Critical assessment point for forelimb issues
-• Diagnostic Imaging: Standard radiographic/ultrasound reference
-• Surgical Approaches: Access route for shoulder procedures
-• Pathology Identification: Common site for:
-  - Osteochondrosis dissecans
-  - Fractures (rare but significant)
-  - Muscle attachment injuries
-  - Shoulder instability
-
-📊 MORPHOMETRIC STANDARDS (Adult Holstein Cattle)
-• Length: 35-42 cm
-• Width: 28-35 cm  
-• Thickness: 1.5-2.5 cm (varies by location)
-• Weight: Approximately 800-1200g
-• Bone Density: 1.2-1.8 g/cm³
-
-💡 RESEARCH & EDUCATIONAL APPLICATIONS
-• Comparative anatomy studies
-• Biomechanical modeling
-• Veterinary education standard
-• Zootechnical assessments
-• Evolutionary morphology research
-
-This detailed profile represents current veterinary anatomical understanding and serves as a reference for both clinical practice and academic research.`;
-                    }
-                    
-                    addMessage(response);
-                }, 2500);
-            } else {
-                setTimeout(() => {
-                    removeTypingIndicator(typingIndicator);
-                    addMessage('I specialize in scapula anatomy and veterinary bone classification. Please ask me about scapula structure, species differences, clinical applications, or related anatomical topics. For example: "Compare scapula anatomy between species" or "What are the clinical features of bovine scapula?"');
-                }, 1500);
+    // Fotoğraf çekme fonksiyonu
+    function capturePhoto() {
+        if (video.srcObject) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0);
+            
+            // Çekilen fotoğrafı göster
+            const imageData = canvas.toDataURL('image/jpeg');
+            
+            // Eğer daha önce fotoğraf varsa kaldır
+            const existingImage = analysisResult.querySelector('.captured-image');
+            if (existingImage) {
+                existingImage.remove();
             }
+            
+            // Yeni fotoğrafı ekle
+            const img = document.createElement('img');
+            img.src = imageData;
+            img.className = 'captured-image';
+            img.style.display = 'none';
+            
+            const h2 = analysisResult.querySelector('h2');
+            analysisResult.insertBefore(img, h2);
+            
+            // Analiz tamamlandığında fotoğrafı göster
+            setTimeout(() => {
+                img.style.display = 'block';
+            }, 1000);
         }
+    }
 
-        sendBtn.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
+    // Sohbet fonksiyonu
+    function addMessage(message, isUser = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+        messageDiv.textContent = message;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
 
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', () => {
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-            }
-        });
-    </script>
+    // Typing indicator göster
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'typing-indicator';
+        typingDiv.innerHTML = `
+            <span>Yazıyor</span>
+            <div class="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        `;
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        return typingDiv;
+    }
+
+    // Typing indicator kaldır
+    function removeTypingIndicator(typingIndicator) {
+        if (typingIndicator && typingIndicator.parentNode) {
+            typingIndicator.parentNode.removeChild(typingIndicator);
+        }
+    }
+
+    function sendMessage() {
+        const message = chatInput.value.trim();
+        if (message === '') return;
+
+        addMessage(message, true);
+        chatInput.value = '';
+
+        // Typing indicator göster
+        const typingIndicator = showTypingIndicator();
+
+        // Scapula bilgisi kontrolü
+        const lowerMessage = message.toLowerCase();
+        if (lowerMessage.includes('scapula') || 
+            lowerMessage.includes('scapulae') || 
+            lowerMessage.includes('skalpula') ||
+            lowerMessage.includes('fark') || 
+            lowerMessage.includes('farklı') || 
+            lowerMessage.includes('hayvan') || 
+            lowerMessage.includes('tür')) {
+            
+            setTimeout(() => {
+                removeTypingIndicator(typingIndicator);
+                let response = '';
+                
+                // Hayvanlar arası fark sorusu kontrolü
+                if (lowerMessage.includes('fark') || lowerMessage.includes('farklı') || 
+                    lowerMessage.includes('hayvan') || lowerMessage.includes('tür')) {
+                    
+                    response = `🔬 **Hayvanlar Arasında Scapula Farklılıkları**
+```
+
+🐄 **İnekler (Ruminantlar)**
+✦ En geniş ve güçlü scapula yapısı
+✦ Belirgin acromion çıkıntısı
+✦ Güçlü spina scapulae
+✦ Ağır yük taşımaya uygun tasarım
+
+🐕 **Köpekler (Karnivorlar)**  
+✦ Orta boyutlu, atletik yapı
+✦ Hareket kabiliyetine odaklanmış
+✦ Esnek kas bağlantı noktaları
+✦ Avlama uygun dinamik yapı
+
+🐴 **Atlar (Equidae)**
+✦ Uzun ve ince yapılı
+✦ Koşu performansına optimize
+✦ Özel tuber spina scapulae
+✦ Hızlı hareket için tasarlanmış
+
+🐱 **Kediler (Felidae)**
+✦ Küçük ve çevik yapı
+✦ Süratle hareket edebilme
+✦ Tırmanma kabiliyetine uygun
+✦ Esnek omuz eklemi
+
+🔍 **Temel Farklar:**
+• Beslenme şekli → Kas yapısı
+• Yaşam tarzı → Kemik yoğunluğu  
+• Hareket biçimi → Scapula boyutu
+• Vücut ağırlığı → Güçlendirme yapıları`;
+
+```
+                } else {
+                    // Genel scapula bilgisi
+                    response = `🦴 **İnek Scapulası - Detaylı Bilgi**
+```
+
+📍 **Anatomik Konum**
+✦ Omuz kuşağının temel kemiği
+✦ Göğüs kafesinin yan-arkasında
+✦ Sadece kaslarla gövdeye bağlı
+✦ Synsarcosis bağlantı türü
+
+🔬 **Yapısal Özellikler**
+✦ **Şekil:** Üçgen yassı kemik
+✦ **Yüzler:** Facies costalis (iç) & lateralis (dış)
+✦ **Çıkıntı:** Spina scapulae (belirgin)
+✦ **Eklem:** Articulation humeri ile humerusa bağlı
+
+⚡ **Fonksiyonel Görevler**
+• 🎯 Ön bacak hareketlerinin merkezi
+• 💪 Güçlü kas gruplarının bağlantı noktası
+• 🛡️ Omuz ekleminin stabilizasyonu
+• 🏃‍♂️ Hareket açıklığının düzenlenmesi
+
+🩺 **Veteriner Önem**
+✓ Topallık teşhisinde kritik nokta
+✓ Kas yaralanmalarının değerlendirilmesi  
+✓ Omuz displazisi tanısı
+✓ Performans veterinerliğinde temel
+
+💡 **İlginç Bilgiler**
+• Kürek kemiği adını şeklinden alır
+• Memelilerde clavicula kaybolmuştur
+• Ruminantlarda en gelişmiş halidir
+• Hareket özgürlüğünü maksimize eder`;
+}
+
+```
+                addMessage(response);
+            }, 2000); // 2 saniye typing süresi
+        } else {
+            setTimeout(() => {
+                removeTypingIndicator(typingIndicator);
+                addMessage('Merhaba! Scapula hakkında bilgi almak için istediğinizi sorabilirsiniz. Örneğin: "scapula nedir?", "hayvanlar arasında farklar" gibi sorular sorabilirsiniz.');
+            }, 1500); // 1.5 saniye typing süresi
+        }
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    // Sayfa yüklendiğinde kamerayı otomatik başlat
+    window.addEventListener('load', () => {
+        // Otomatik başlatma kaldırıldı, kullanıcı butonla açacak
+    });
+
+    // Sayfa kapatılırken kamerayı kapat
+    window.addEventListener('beforeunload', () => {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+        }
+    });
+</script>
+```
+
 </body>
 </html>
