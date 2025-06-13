@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,560 +6,557 @@
     <title>Animal Bone Analysis System </title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-```
-    :root {
-        --primary-color: #2563eb;
-        --primary-dark: #1d4ed8;
-        --secondary-color: #0891b2;
-        --accent-color: #059669;
-        --success-color: #10b981;
-        --warning-color: #f59e0b;
-        --error-color: #ef4444;
-        --text-primary: #1f2937;
-        --text-secondary: #6b7280;
-        --text-light: #9ca3af;
-        --bg-primary: #ffffff;
-        --bg-secondary: #f8fafc;
-        --bg-tertiary: #f1f5f9;
-        --border-color: #e2e8f0;
-        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-        --radius-sm: 6px;
-        --radius-md: 8px;
-        --radius-lg: 12px;
-        --radius-xl: 16px;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        color: var(--text-primary);
-        line-height: 1.6;
-    }
-
-    .app-container {
-        min-height: 100vh;
-        padding: 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .main-wrapper {
-        width: 100%;
-        max-width: 1400px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow-xl);
-        overflow: hidden;
-    }
-
-    .header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-        color: white;
-        padding: 3rem 2rem;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="rgba(255,255,255,0.1)" fill-opacity="0.1"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>') repeat;
-        opacity: 0.1;
-    }
-
-    .header-content {
-        position: relative;
-        z-index: 1;
-    }
-
-    .header h1 {
-        font-size: 2.75rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-        background: linear-gradient(45deg, #ffffff, #e2e8f0);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .header .subtitle {
-        font-size: 1.25rem;
-        font-weight: 400;
-        opacity: 0.9;
-        margin-bottom: 1rem;
-    }
-
-    .header .version {
-        display: inline-block;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-size: 0.875rem;
-        font-weight: 500;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .main-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-        padding: 2.5rem;
-    }
-
-    .section {
-        background: var(--bg-primary);
-        border-radius: var(--radius-lg);
-        border: 1px solid var(--border-color);
-        overflow: hidden;
-        transition: all 0.3s ease;
-    }
-
-    .section:hover {
-        box-shadow: var(--shadow-lg);
-        transform: translateY(-2px);
-    }
-
-    .section-header {
-        padding: 1.5rem;
-        background: var(--bg-secondary);
-        border-bottom: 1px solid var(--border-color);
-    }
-
-    .section-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-    }
-
-    .section-content {
-        padding: 1.5rem;
-    }
-
-    .camera-container {
-        position: relative;
-        background: var(--bg-tertiary);
-        border: 2px dashed var(--border-color);
-        border-radius: var(--radius-md);
-        height: 320px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        margin-bottom: 1.5rem;
-        transition: all 0.3s ease;
-    }
-
-    .camera-container:hover {
-        border-color: var(--primary-color);
-        background: rgba(37, 99, 235, 0.05);
-    }
-
-    .camera-placeholder {
-        text-align: center;
-        color: var(--text-light);
-        font-size: 1.125rem;
-    }
-
-    .camera-placeholder .icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        opacity: 0.6;
-    }
-
-    .video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: var(--radius-sm);
-    }
-
-    .controls {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-    }
-
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.75rem 1.5rem;
-        border: none;
-        border-radius: var(--radius-md);
-        font-size: 0.875rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        text-decoration: none;
-        font-family: inherit;
-    }
-
-    .btn:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-    }
-
-    .btn-primary {
-        background: var(--primary-color);
-        color: white;
-        box-shadow: var(--shadow-sm);
-    }
-
-    .btn-primary:hover:not(:disabled) {
-        background: var(--primary-dark);
-        box-shadow: var(--shadow-md);
-        transform: translateY(-1px);
-    }
-
-    .btn-success {
-        background: var(--success-color);
-        color: white;
-        box-shadow: var(--shadow-sm);
-    }
-
-    .btn-success:hover:not(:disabled) {
-        background: #059669;
-        box-shadow: var(--shadow-md);
-        transform: translateY(-1px);
-    }
-
-    .analysis-card {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-        color: white;
-        padding: 2rem;
-        border-radius: var(--radius-lg);
-        text-align: center;
-        position: relative;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: all 0.5s ease;
-        overflow: hidden;
-    }
-
-    .analysis-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-        transform: translateX(-100%);
-        transition: transform 0.6s ease;
-    }
-
-    .analysis-card:hover::before {
-        transform: translateX(100%);
-    }
-
-    .analysis-card.show {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .analysis-card.loading .analysis-content {
-        opacity: 0;
-    }
-
-    .analysis-title {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .captured-image {
-        width: 100%;
-        max-width: 280px;
-        height: 180px;
-        object-fit: cover;
-        border-radius: var(--radius-md);
-        margin-bottom: 1.5rem;
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        box-shadow: var(--shadow-md);
-    }
-
-    .analysis-result {
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(10px);
-        padding: 1.25rem;
-        border-radius: var(--radius-md);
-        font-size: 1.125rem;
-        font-weight: 600;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .loading-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(37, 99, 235, 0.95);
-        backdrop-filter: blur(5px);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        border-radius: var(--radius-lg);
-        color: white;
-        font-size: 1.125rem;
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .loading-overlay.show {
-        display: flex;
-    }
-
-    .spinner {
-        width: 48px;
-        height: 48px;
-        border: 3px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        border-top-color: white;
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        to { transform: rotate(360deg); }
-    }
-
-    .chat-section {
-        grid-column: 1 / -1;
-        margin-top: 2rem;
-        display: none;
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.5s ease;
-    }
-
-    .chat-section.show {
-        display: block;
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .chat-container {
-        background: var(--bg-primary);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-lg);
-        overflow: hidden;
-        box-shadow: var(--shadow-md);
-    }
-
-    .chat-header {
-        background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
-        color: white;
-        padding: 1.5rem;
-        text-align: center;
-    }
-
-    .chat-header h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-    }
-
-    .chat-header p {
-        opacity: 0.9;
-        font-size: 0.875rem;
-    }
-
-    .chat-messages {
-        height: 400px;
-        padding: 1.5rem;
-        overflow-y: auto;
-        background: var(--bg-secondary);
-    }
-
-    .chat-messages::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    .chat-messages::-webkit-scrollbar-track {
-        background: var(--bg-tertiary);
-    }
-
-    .chat-messages::-webkit-scrollbar-thumb {
-        background: var(--border-color);
-        border-radius: 3px;
-    }
-
-    .message {
-        margin-bottom: 1rem;
-        padding: 0.875rem 1.25rem;
-        border-radius: var(--radius-lg);
-        max-width: 85%;
-        word-wrap: break-word;
-        font-size: 0.875rem;
-        line-height: 1.5;
-    }
-
-    .user-message {
-        background: var(--primary-color);
-        color: white;
-        margin-left: auto;
-        border-bottom-right-radius: var(--radius-sm);
-    }
-
-    .bot-message {
-        background: white;
-        color: var(--text-primary);
-        border: 1px solid var(--border-color);
-        border-bottom-left-radius: var(--radius-sm);
-        white-space: pre-line;
-    }
-
-    .typing-indicator {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        background: white;
-        color: var(--text-secondary);
-        padding: 0.875rem 1.25rem;
-        border-radius: var(--radius-lg);
-        max-width: 85%;
-        margin-bottom: 1rem;
-        border: 1px solid var(--border-color);
-    }
-
-    .typing-dots {
-        display: flex;
-        gap: 4px;
-    }
-
-    .typing-dots span {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: var(--text-light);
-        animation: typing 1.4s infinite ease-in-out;
-    }
-
-    .typing-dots span:nth-child(1) { animation-delay: 0s; }
-    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-
-    @keyframes typing {
-        0%, 60%, 100% { opacity: 0.3; transform: scale(0.8); }
-        30% { opacity: 1; transform: scale(1); }
-    }
-
-    .chat-input-container {
-        padding: 1.5rem;
-        background: var(--bg-primary);
-        border-top: 1px solid var(--border-color);
-        display: flex;
-        gap: 1rem;
-        align-items: flex-end;
-    }
-
-    .chat-input {
-        flex: 1;
-        padding: 0.875rem 1.25rem;
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
-        font-size: 0.875rem;
-        font-family: inherit;
-        outline: none;
-        transition: all 0.2s ease;
-        resize: none;
-        min-height: 44px;
-        max-height: 120px;
-    }
-
-    .chat-input:focus {
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    }
-
-    .status-indicator {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        background: rgba(16, 185, 129, 0.1);
-        color: var(--success-color);
-        border-radius: 20px;
-        font-size: 0.875rem;
-        font-weight: 500;
-        margin-top: 1rem;
-    }
-
-    .status-dot {
-        width: 8px;
-        height: 8px;
-        background: var(--success-color);
-        border-radius: 50%;
-        animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-    }
-
-    @media (max-width: 1024px) {
-        .main-content {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            padding: 1.5rem;
-        }
         
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #0891b2;
+            --accent-color: #059669;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-light: #9ca3af;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
         .app-container {
-            padding: 1rem;
-        }
-        
-        .header h1 {
-            font-size: 2rem;
-        }
-        
-        .analysis-title {
-            font-size: 2rem;
-        }
-    }
-
-    @media (max-width: 640px) {
-        .header {
-            padding: 2rem 1rem;
-        }
-        
-        .controls {
-            flex-direction: column;
+            min-height: 100vh;
+            padding: 2rem;
+            display: flex;
             align-items: center;
-        }
-        
-        .btn {
-            width: 100%;
             justify-content: center;
         }
-    }
-</style>
-```
 
+        .main-wrapper {
+            width: 100%;
+            max-width: 1400px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="rgba(255,255,255,0.1)" fill-opacity="0.1"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>') repeat;
+            opacity: 0.1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .subtitle {
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .header .version {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2.5rem;
+        }
+
+        .section {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .section-header {
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-content {
+            padding: 1.5rem;
+        }
+
+        .camera-container {
+            position: relative;
+            background: var(--bg-tertiary);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .camera-container:hover {
+            border-color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .camera-placeholder {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1.125rem;
+        }
+
+        .camera-placeholder .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.6;
+        }
+
+        .video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-family: inherit;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--primary-dark);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #059669;
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .analysis-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            overflow: hidden;
+        }
+
+        .analysis-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .analysis-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .analysis-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .analysis-card.loading .analysis-content {
+            opacity: 0;
+        }
+
+        .analysis-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .captured-image {
+            width: 100%;
+            max-width: 280px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-md);
+        }
+
+        .analysis-result {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+            font-size: 1.125rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(37, 99, 235, 0.95);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-lg);
+            color: white;
+            font-size: 1.125rem;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .chat-section {
+            grid-column: 1 / -1;
+            margin-top: 2rem;
+            display: none;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+
+        .chat-section.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chat-container {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .chat-header h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .chat-header p {
+            opacity: 0.9;
+            font-size: 0.875rem;
+        }
+
+        .chat-messages {
+            height: 400px;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background: var(--bg-secondary);
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.875rem 1.25rem;
+            border-radius: var(--radius-lg);
+            max-width: 85%;
+            word-wrap: break-word;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .user-message {
+            background: var(--primary-color);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: var(--radius-sm);
+        }
+
+        .bot-message {
+            background: white;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: var(--radius-sm);
+            white-space: pre-line;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: white;
+            color: var(--text-secondary);
+            padding: 0.875rem 1.25rem;
+            border-radius: var(--radius-lg);
+            max-width: 85%;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-light);
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dots span:nth-child(1) { animation-delay: 0s; }
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { opacity: 0.3; transform: scale(0.8); }
+            30% { opacity: 1; transform: scale(1); }
+        }
+
+        .chat-input-container {
+            padding: 1.5rem;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.875rem 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s ease;
+            resize: none;
+            min-height: 44px;
+            max-height: 120px;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-top: 1rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-color);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            
+            .app-container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .analysis-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header {
+                padding: 2rem 1rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="app-container">
@@ -572,249 +568,247 @@
                 </div>
             </header>
 
-```
-        <div class="main-content">
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <span>📷</span>
-                        Image Capture & Analysis
-                    </h2>
-                </div>
-                <div class="section-content">
-                    <div class="camera-container" id="cameraContainer">
-                        <div class="camera-placeholder" id="cameraPlaceholder">
-                            <div class="icon">📸</div>
-                            <div>Click to activate camera</div>
+            <div class="main-content">
+                <section class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span>📷</span>
+                            Image Capture & Analysis
+                        </h2>
+                    </div>
+                    <div class="section-content">
+                        <div class="camera-container" id="cameraContainer">
+                            <div class="camera-placeholder" id="cameraPlaceholder">
+                                <div class="icon">📸</div>
+                                <div>Click to activate camera</div>
+                            </div>
+                            <video id="video" class="video" style="display: none;" autoplay playsinline></video>
                         </div>
-                        <video id="video" class="video" style="display: none;" autoplay playsinline></video>
+                        <div class="controls">
+                            <button class="btn btn-primary" id="startCamera">
+                                <span>▶</span>
+                                Activate Camera
+                            </button>
+                            <button class="btn btn-success" id="analyzeBtn">
+                                <span>🔬</span>
+                                Analyze Sample
+                            </button>
+                        </div>
+                        <div class="status-indicator" style="display: none;" id="statusIndicator">
+                            <div class="status-dot"></div>
+                            <span>System Ready</span>
+                        </div>
                     </div>
-                    <div class="controls">
-                        <button class="btn btn-primary" id="startCamera">
-                            <span>▶</span>
-                            Activate Camera
-                        </button>
-                        <button class="btn btn-success" id="analyzeBtn">
-                            <span>🔬</span>
-                            Analyze Sample
-                        </button>
-                    </div>
-                    <div class="status-indicator" style="display: none;" id="statusIndicator">
-                        <div class="status-dot"></div>
-                        <span>System Ready</span>
-                    </div>
-                </div>
-            </section>
+                </section>
 
-            <section class="section">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <span>📊</span>
-                        Classification Results
-                    </h2>
-                </div>
-                <div class="section-content">
-                    <div class="analysis-card" id="analysisResult">
-                        <div class="loading-overlay" id="loadingOverlay">
-                            <div class="spinner"></div>
-                            <div>Processing image data...</div>
-                        </div>
-                        <div class="analysis-content">
-                            <h2 class="analysis-title">FEMUR</h2>
-                            <div class="analysis-result">
-                                <strong>Classification: Canine (Dog)</strong>
+                <section class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span>📊</span>
+                            Classification Results
+                        </h2>
+                    </div>
+                    <div class="section-content">
+                        <div class="analysis-card" id="analysisResult">
+                            <div class="loading-overlay" id="loadingOverlay">
+                                <div class="spinner"></div>
+                                <div>Processing image data...</div>
+                            </div>
+                            <div class="analysis-content">
+                                <h2 class="analysis-title">FEMUR</h2>
+                                <div class="analysis-result">
+                                    <strong>Classification: Canine (Dog)</strong>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </div>
+                </section>
+            </div>
 
-        <div class="chat-section" id="chatSection">
-            <div class="chat-container">
-                <div class="chat-header">
-                    <h3>💬 Expert Knowledge Base</h3>
-                    <p>Ask questions about femur anatomy, classification, and veterinary applications</p>
-                </div>
-                <div class="chat-messages" id="chatMessages">
-                    <div class="message bot-message">
-                        Welcome to the Veterinary Femur Analysis System. I'm here to provide detailed information about femur anatomy, classification differences between species, and clinical applications. How can I assist you today?
+            <div class="chat-section" id="chatSection">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h3>💬 Expert Knowledge Base</h3>
+                        <p>Ask questions about femur anatomy, classification, and veterinary applications</p>
                     </div>
-                </div>
-                <div class="chat-input-container">
-                    <textarea class="chat-input" id="chatInput" placeholder="Type your question about femur anatomy..." rows="1"></textarea>
-                    <button class="btn btn-primary" id="sendBtn">
-                        <span>📤</span>
-                        Send
-                    </button>
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message bot-message">
+                            Welcome to the Veterinary Femur Analysis System. I'm here to provide detailed information about femur anatomy, classification differences between species, and clinical applications. How can I assist you today?
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <textarea class="chat-input" id="chatInput" placeholder="Type your question about femur anatomy..." rows="1"></textarea>
+                        <button class="btn btn-primary" id="sendBtn">
+                            <span>📤</span>
+                            Send
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    let stream = null;
-    const video = document.getElementById('video');
-    const cameraPlaceholder = document.getElementById('cameraPlaceholder');
-    const startCameraBtn = document.getElementById('startCamera');
-    const analyzeBtn = document.getElementById('analyzeBtn');
-    const analysisResult = document.getElementById('analysisResult');
-    const chatMessages = document.getElementById('chatMessages');
-    const chatInput = document.getElementById('chatInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const statusIndicator = document.getElementById('statusIndicator');
+    <script>
+        let stream = null;
+        const video = document.getElementById('video');
+        const cameraPlaceholder = document.getElementById('cameraPlaceholder');
+        const startCameraBtn = document.getElementById('startCamera');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const analysisResult = document.getElementById('analysisResult');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const statusIndicator = document.getElementById('statusIndicator');
 
-    // Auto-resize textarea
-    chatInput.addEventListener('input', function() {
-        this.style.height = 'auto';
-        this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-    });
+        // Auto-resize textarea
+        chatInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
 
-    // Camera initialization
-    startCameraBtn.addEventListener('click', async () => {
-        try {
-            stream = await navigator.mediaDevices.getUserMedia({ 
-                video: { 
-                    facingMode: 'environment',
-                    width: { ideal: 1280 },
-                    height: { ideal: 720 }
-                },
-                audio: false 
-            });
-            video.srcObject = stream;
-            video.style.display = 'block';
-            cameraPlaceholder.style.display = 'none';
-            startCameraBtn.innerHTML = '<span>✓</span>Camera Active';
-            startCameraBtn.disabled = true;
-            statusIndicator.style.display = 'flex';
-        } catch (err) {
-            console.error('Camera access error:', err);
-            alert('Unable to access camera. Please ensure camera permissions are granted and try again.');
-        }
-    });
-
-    // Analysis process
-    analyzeBtn.addEventListener('click', () => {
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const chatSection = document.getElementById('chatSection');
-        
-        // Capture image
-        capturePhoto();
-        
-        // Show loading state
-        analysisResult.classList.add('show', 'loading');
-        loadingOverlay.classList.add('show');
-        
-        // Simulate analysis process
-        setTimeout(() => {
-            loadingOverlay.classList.remove('show');
-            analysisResult.classList.remove('loading');
-            analysisResult.style.background = 'linear-gradient(135deg, #059669 0%, #10b981 100%)';
-            
-            // Show chat section
-            setTimeout(() => {
-                chatSection.classList.add('show');
-            }, 500);
-        }, 2500);
-    });
-
-    // Photo capture
-    function capturePhoto() {
-        if (video.srcObject) {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            ctx.drawImage(video, 0, 0);
-            
-            const imageData = canvas.toDataURL('image/jpeg', 0.9);
-            
-            // Remove existing image
-            const existingImage = analysisResult.querySelector('.captured-image');
-            if (existingImage) {
-                existingImage.remove();
+        // Camera initialization
+        startCameraBtn.addEventListener('click', async () => {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: 'environment',
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    },
+                    audio: false 
+                });
+                video.srcObject = stream;
+                video.style.display = 'block';
+                cameraPlaceholder.style.display = 'none';
+                startCameraBtn.innerHTML = '<span>✓</span>Camera Active';
+                startCameraBtn.disabled = true;
+                statusIndicator.style.display = 'flex';
+            } catch (err) {
+                console.error('Camera access error:', err);
+                alert('Unable to access camera. Please ensure camera permissions are granted and try again.');
             }
+        });
+
+        // Analysis process
+        analyzeBtn.addEventListener('click', () => {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const chatSection = document.getElementById('chatSection');
             
-            // Add new captured image
-            const img = document.createElement('img');
-            img.src = imageData;
-            img.className = 'captured-image';
-            img.style.display = 'none';
+            // Capture image
+            capturePhoto();
             
-            const analysisContent = analysisResult.querySelector('.analysis-content');
-            const title = analysisContent.querySelector('.analysis-title');
-            analysisContent.insertBefore(img, title);
+            // Show loading state
+            analysisResult.classList.add('show', 'loading');
+            loadingOverlay.classList.add('show');
             
-            // Show image after analysis
+            // Simulate analysis process
             setTimeout(() => {
-                img.style.display = 'block';
-            }, 2500);
-        }
-    }
-
-    // Chat functionality
-    function addMessage(message, isUser = false) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
-        messageDiv.textContent = message;
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    function showTypingIndicator() {
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'typing-indicator';
-        typingDiv.innerHTML = `
-            <span>AI Assistant is typing</span>
-            <div class="typing-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        `;
-        chatMessages.appendChild(typingDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-        return typingDiv;
-    }
-
-    function removeTypingIndicator(typingIndicator) {
-        if (typingIndicator && typingIndicator.parentNode) {
-            typingIndicator.parentNode.removeChild(typingIndicator);
-        }
-    }
-
-    function sendMessage() {
-        const message = chatInput.value.trim();
-        if (message === '') return;
-
-        addMessage(message, true);
-        chatInput.value = '';
-        chatInput.style.height = 'auto';
-
-        const typingIndicator = showTypingIndicator();
-        const lowerMessage = message.toLowerCase();
-        
-        if (lowerMessage.includes('femur') || 
-            lowerMessage.includes('thigh bone') || 
-            lowerMessage.includes('leg bone') ||
-            lowerMessage.includes('difference') || 
-            lowerMessage.includes('different') || 
-            lowerMessage.includes('animal') || 
-            lowerMessage.includes('species') ||
-            lowerMessage.includes('anatomy') ||
-            lowerMessage.includes('bone')) {
-            
-            setTimeout(() => {
-                removeTypingIndicator(typingIndicator);
-                let response = '';
+                loadingOverlay.classList.remove('show');
+                analysisResult.classList.remove('loading');
+                analysisResult.style.background = 'linear-gradient(135deg, #059669 0%, #10b981 100%)';
                 
-                if (lowerMessage.includes('difference') || lowerMessage.includes('different') || 
-                    lowerMessage.includes('animal') || lowerMessage.includes('species')) {
+                // Show chat section
+                setTimeout(() => {
+                    chatSection.classList.add('show');
+                }, 500);
+            }, 2500);
+        });
+
+        // Photo capture
+        function capturePhoto() {
+            if (video.srcObject) {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                ctx.drawImage(video, 0, 0);
+                
+                const imageData = canvas.toDataURL('image/jpeg', 0.9);
+                
+                // Remove existing image
+                const existingImage = analysisResult.querySelector('.captured-image');
+                if (existingImage) {
+                    existingImage.remove();
+                }
+                
+                // Add new captured image
+                const img = document.createElement('img');
+                img.src = imageData;
+                img.className = 'captured-image';
+                img.style.display = 'none';
+                
+                const analysisContent = analysisResult.querySelector('.analysis-content');
+                const title = analysisContent.querySelector('.analysis-title');
+                analysisContent.insertBefore(img, title);
+                
+                // Show image after analysis
+                setTimeout(() => {
+                    img.style.display = 'block';
+                }, 2500);
+            }
+        }
+
+        // Chat functionality
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.innerHTML = `
+                <span>AI Assistant is typing</span>
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            `;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return typingDiv;
+        }
+
+        function removeTypingIndicator(typingIndicator) {
+            if (typingIndicator && typingIndicator.parentNode) {
+                typingIndicator.parentNode.removeChild(typingIndicator);
+            }
+        }
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message === '') return;
+
+            addMessage(message, true);
+            chatInput.value = '';
+            chatInput.style.height = 'auto';
+
+            const typingIndicator = showTypingIndicator();
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('femur') || 
+                lowerMessage.includes('thigh bone') || 
+                lowerMessage.includes('leg bone') ||
+                lowerMessage.includes('difference') || 
+                lowerMessage.includes('different') || 
+                lowerMessage.includes('animal') || 
+                lowerMessage.includes('species') ||
+                lowerMessage.includes('anatomy') ||
+                lowerMessage.includes('bone')) {
+                
+                setTimeout(() => {
+                    removeTypingIndicator(typingIndicator);
+                    let response = '';
                     
-                    response = `🔬 COMPARATIVE FEMUR ANATOMY ACROSS SPECIES
-```
+                    if (lowerMessage.includes('difference') || lowerMessage.includes('different') || 
+                        lowerMessage.includes('animal') || lowerMessage.includes('species')) {
+                        
+                        response = `🔬 COMPARATIVE FEMUR ANATOMY ACROSS SPECIES
 
 🐕 CANINE (DOMESTIC DOG) - Canis familiaris
 • Morphology: Medium-sized, robust long bone structure
@@ -864,11 +858,9 @@
 ✓ Growth plate assessment and developmental disorders
 ✓ Orthopedic rehabilitation protocols
 ✓ Evolutionary anatomy and locomotion studies`;
-
-```
-                } else {
-                    response = `🦴 CANINE FEMUR - COMPREHENSIVE ANATOMICAL PROFILE
-```
+                        
+                    } else {
+                        response = `🦴 CANINE FEMUR - COMPREHENSIVE ANATOMICAL PROFILE
 
 📍 ANATOMICAL CLASSIFICATION & LOCATION
 • Bone Type: Long bone (Os femoris)
@@ -902,17 +894,16 @@
 
 🩺 CLINICAL VETERINARY SIGNIFICANCE
 • Fracture Management: Common site for traumatic injuries
-
-- Femoral neck fractures (older dogs)
-- Diaphyseal fractures (high-energy trauma)
-- Supracondylar fractures (young dogs)
-  • Hip Dysplasia: Femoral head/neck abnormalities
-  • Growth Disorders: Slipped capital femoral epiphysis
-  • Degenerative Conditions: Osteoarthritis of hip and knee
-  • Surgical Procedures:
-- Total hip replacement
-- Femoral head ostectomy
-- Fracture repair with plates/pins
+  - Femoral neck fractures (older dogs)
+  - Diaphyseal fractures (high-energy trauma)
+  - Supracondylar fractures (young dogs)
+• Hip Dysplasia: Femoral head/neck abnormalities
+• Growth Disorders: Slipped capital femoral epiphysis
+• Degenerative Conditions: Osteoarthritis of hip and knee
+• Surgical Procedures:
+  - Total hip replacement
+  - Femoral head ostectomy
+  - Fracture repair with plates/pins
 
 📊 MORPHOMETRIC STANDARDS (Medium-sized Dog, 25kg)
 • Total Length: 18-22 cm
@@ -945,35 +936,32 @@
 • Osteosarcoma: Primary bone tumor (distal femur common site)
 
 This comprehensive profile serves as a reference for veterinary practitioners, researchers, and students studying canine orthopedic anatomy and pathology.`;
-}
-
-```
-                addMessage(response);
-            }, 2500);
-        } else {
-            setTimeout(() => {
-                removeTypingIndicator(typingIndicator);
-                addMessage('I specialize in femur anatomy and veterinary bone classification. Please ask me about femur structure, species differences, clinical applications, or related anatomical topics. For example: "Compare femur anatomy between species" or "What are the clinical features of canine femur?"');
-            }, 1500);
+                    }
+                    
+                    addMessage(response);
+                }, 2500);
+            } else {
+                setTimeout(() => {
+                    removeTypingIndicator(typingIndicator);
+                    addMessage('I specialize in femur anatomy and veterinary bone classification. Please ask me about femur structure, species differences, clinical applications, or related anatomical topics. For example: "Compare femur anatomy between species" or "What are the clinical features of canine femur?"');
+                }, 1500);
+            }
         }
-    }
 
-    sendBtn.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            sendMessage();
-        }
-    });
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
 
-    // Cleanup on page unload
-    window.addEventListener('beforeunload', () => {
-        if (stream) {
-            stream.getTracks().forEach(track => track.stop());
-        }
-    });
-</script>
-```
-
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+        });
+    </script>
 </body>
 </html>
